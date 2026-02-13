@@ -72,6 +72,21 @@
             box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.3);
             border-color: rgba(37, 99, 235, 0.5);
         }
+
+        /* Modal Styles */
+        #booking-modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #booking-modal.hidden-modal {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #booking-modal.visible-modal {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body class="bg-dark-950 text-gray-200 antialiased overflow-x-hidden">
@@ -95,8 +110,8 @@
                     <a href="#priser" class="hover:text-white transition text-sm font-medium uppercase tracking-wider">Priser</a>
                     <a href="#kontakt" class="hover:text-white transition text-sm font-medium uppercase tracking-wider">Kontakt</a>
                     
-                    <!-- CTA Button (Kopplad till Setmore) -->
-                    <button onclick="triggerSetmore()" class="px-6 py-2.5 rounded bg-accent hover:bg-blue-600 text-white font-bold shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 border border-white/10 cursor-pointer">
+                    <!-- CTA Button -->
+                    <button onclick="openBooking()" class="px-6 py-2.5 rounded bg-accent hover:bg-blue-600 text-white font-bold shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 border border-white/10 cursor-pointer">
                         Boka Tid <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
                     </button>
                 </div>
@@ -114,13 +129,14 @@
                 <a href="#hem" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-md">Start</a>
                 <a href="#om" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-md">Om Oss</a>
                 <a href="#priser" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-md">Priser</a>
-                <button onclick="triggerSetmore()" class="w-full text-left mt-4 px-3 py-3 bg-accent text-white font-bold rounded">Boka Tid Nu</button>
+                <button onclick="openBooking()" class="w-full text-left mt-4 px-3 py-3 bg-accent text-white font-bold rounded">Boka Tid Nu</button>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header id="hem" class="relative min-h-screen flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-scroll md:bg-fixed">
+    <!-- Notera: bg-scroll md:bg-fixed fixar bakgrundsbilden på mobilen -->
+    <header id="hem" class="relative min-h-screen flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-no-repeat bg-scroll md:bg-fixed">
         <div class="max-w-4xl mx-auto px-4 text-center relative z-10 pt-20" data-aos="fade-up" data-aos-duration="1000">
             <div class="inline-block mb-4 px-4 py-1 border border-accent/50 rounded-full bg-accent/10 backdrop-blur-sm">
                 <span class="text-accent-light text-sm font-bold tracking-widest uppercase">Välkommen till Hair4u</span>
@@ -137,7 +153,7 @@
             
             <div class="flex flex-col sm:flex-row gap-5 justify-center">
                 <!-- Boka-knapp -->
-                <button onclick="triggerSetmore()" class="group relative px-8 py-4 bg-white text-dark-950 font-bold rounded overflow-hidden transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                <button onclick="openBooking()" class="group relative px-8 py-4 bg-white text-dark-950 font-bold rounded overflow-hidden transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                     <span class="relative z-10">BOKA TID ONLINE</span>
                     <div class="absolute inset-0 h-full w-full bg-gray-200 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
                 </button>
@@ -211,7 +227,7 @@
                 </div>
                 <div class="relative" data-aos="fade-left">
                     <div class="absolute -inset-4 bg-accent opacity-20 blur-2xl rounded-full"></div>
-                    <img src="frisyr.jpg" alt="Hair4u Interiör" class="relative rounded-lg shadow-2xl border border-white/10 w-full h-auto grayscale hover:grayscale-0 transition duration-700">
+                    <img src="https://images.unsplash.com/photo-1503951914875-befbb7135952?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hair4u Interiör" class="relative rounded-lg shadow-2xl border border-white/10 w-full h-auto grayscale hover:grayscale-0 transition duration-700">
                 </div>
             </div>
         </div>
@@ -239,7 +255,7 @@
                     <p class="text-gray-400 mb-8 border-b border-white/5 pb-8">Inkluderar konsultation, hårtvätt, klippning och styling med premiumvax.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-3xl font-bold text-white">380 kr</span>
-                        <button onclick="triggerSetmore()" class="w-10 h-10 rounded-full bg-white text-dark-900 flex items-center justify-center hover:bg-accent hover:text-white transition-colors">
+                        <button onclick="openBooking()" class="w-10 h-10 rounded-full bg-white text-dark-900 flex items-center justify-center hover:bg-accent hover:text-white transition-colors">
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
@@ -256,7 +272,7 @@
                     <p class="text-gray-400 mb-8 border-b border-white/5 pb-8">Hela paketet. Hårklippning samt skäggtrimning med maskin och linjer med kniv.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-3xl font-bold text-white">500 kr</span>
-                        <button onclick="triggerSetmore()" class="px-6 py-2 rounded bg-accent text-white font-bold text-sm hover:bg-blue-600 transition-colors">
+                        <button onclick="openBooking()" class="px-6 py-2 rounded bg-accent text-white font-bold text-sm hover:bg-blue-600 transition-colors">
                             BOKA NU
                         </button>
                     </div>
@@ -272,7 +288,7 @@
                     <p class="text-gray-400 mb-8 border-b border-white/5 pb-8">Samma höga kvalitet till ett reducerat pris. Gäller vardagar mellan 10:00 - 14:00.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-3xl font-bold text-white">350 kr</span>
-                        <button onclick="triggerSetmore()" class="w-10 h-10 rounded-full bg-white text-dark-900 flex items-center justify-center hover:bg-accent hover:text-white transition-colors">
+                        <button onclick="openBooking()" class="w-10 h-10 rounded-full bg-white text-dark-900 flex items-center justify-center hover:bg-accent hover:text-white transition-colors">
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
@@ -339,7 +355,7 @@
                 <div class="relative z-10">
                     <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Redo för en förändring?</h2>
                     <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">Våra tider fylls snabbt upp. Boka din tid idag för att säkra din plats i stolen.</p>
-                    <button onclick="triggerSetmore()" class="inline-block px-10 py-5 bg-white text-dark-900 font-bold text-lg rounded-lg hover:bg-accent hover:text-white transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                    <button onclick="openBooking()" class="inline-block px-10 py-5 bg-white text-dark-900 font-bold text-lg rounded-lg hover:bg-accent hover:text-white transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                         BOKA TID NU
                     </button>
                 </div>
@@ -376,24 +392,30 @@
         </div>
     </footer>
 
-    <!-- SETMORE INTEGRATION (OSYNLIG MEN AKTIV) -->
-    <!-- 
-      VIKTIGT: 
-      1. id="Anywhere_button_iframe" måste finnas (och vara unikt).
-      2. class="anywhere-book-now-button" måste finnas (Setmore söker efter denna).
-      3. Vi använder position absolute och left -9999px för att gömma den, 
-         eftersom 'display:none' gör att Setmore inte aktiverar knappen.
-    -->
-    <button id="Anywhere_button_iframe" 
-        class="anywhere-book-now-button"
-        style="position: absolute; left: -9999px; top: 0;"
-        data-booking-url="https://testz9aw.setmore.com" 
-        data-new-tab="false">
-        Book now
-    </button>
-    
-    <!-- Setmore Script (Laddas sist) -->
-    <script id="anywhere_book_now_script" src="https://assets.setmore.com/integration/book-now/live/v1/anywhere-book-now.js"></script>
+    <!-- CUSTOM BOOKING MODAL (Ersätter Setmore-knappen) -->
+    <div id="booking-modal" class="hidden-modal fixed inset-0 z-[60] flex items-center justify-center p-0 md:p-4">
+        <!-- Bakgrund som stänger modarlen när man klickar -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeBooking()"></div>
+        
+        <!-- Själva innehållet -->
+        <div class="relative bg-white w-full h-full md:max-w-4xl md:h-[85vh] md:rounded-lg overflow-hidden shadow-2xl flex flex-col">
+            <!-- Header i modarlen -->
+            <div class="bg-dark-900 text-white p-4 flex justify-between items-center border-b border-gray-800 shrink-0">
+                <span class="font-bold text-lg">Boka Tid</span>
+                <button onclick="closeBooking()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Bokningssidan (Iframe) -->
+            <!-- Notera: w-full och h-full gör att den fyller hela rutan -->
+            <iframe 
+                src="https://testz9aw.setmore.com" 
+                class="w-full h-full border-0" 
+                title="Bokningssystem">
+            </iframe>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -406,20 +428,21 @@
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
 
-        // Function to click the hidden Setmore button
-        function triggerSetmore() {
-            // Setmore-knappen vi skapade ovan
-            const setmoreBtn = document.getElementById('Anywhere_button_iframe');
-            
-            if(setmoreBtn) {
-                // Simulera ett klick på den gömda knappen
-                setmoreBtn.click();
-            } else {
-                // Fallback: Om knappen av någon anledning inte hittas, öppna i ny flik
-                window.open('https://testz9aw.setmore.com', '_blank');
-            }
+        // BOOKING MODAL LOGIC
+        const modal = document.getElementById('booking-modal');
+        const body = document.body;
+
+        function openBooking() {
+            modal.classList.remove('hidden-modal');
+            modal.classList.add('visible-modal');
+            body.style.overflow = 'hidden'; // Låser bakgrundscroll
+        }
+
+        function closeBooking() {
+            modal.classList.remove('visible-modal');
+            modal.classList.add('hidden-modal');
+            body.style.overflow = 'auto'; // Låser upp bakgrundscroll
         }
     </script>
 </body>
 </html>
-
