@@ -72,6 +72,21 @@
             box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.3);
             border-color: rgba(37, 99, 235, 0.5);
         }
+
+        /* Modal Styles */
+        #booking-modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #booking-modal.hidden-modal {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #booking-modal.visible-modal {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body class="bg-dark-950 text-gray-200 antialiased overflow-x-hidden">
@@ -95,10 +110,10 @@
                     <a href="#priser" class="hover:text-white transition text-sm font-medium uppercase tracking-wider">Priser</a>
                     <a href="#kontakt" class="hover:text-white transition text-sm font-medium uppercase tracking-wider">Kontakt</a>
                     
-                    <!-- CTA Button -->
-                    <a href="https://www.fresha.com" target="_blank" class="px-6 py-2.5 rounded bg-accent hover:bg-blue-600 text-white font-bold shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 border border-white/10">
+                    <!-- CTA Button (Öppnar nu Modal) -->
+                    <button onclick="openBooking()" class="px-6 py-2.5 rounded bg-accent hover:bg-blue-600 text-white font-bold shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 border border-white/10 cursor-pointer">
                         Boka Tid <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
-                    </a>
+                    </button>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -108,13 +123,13 @@
             </div>
         </div>
         
-        <!-- Mobile Menu (Hidden by default) -->
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-dark-900 border-t border-white/10 absolute w-full">
             <div class="px-4 pt-2 pb-6 space-y-2">
                 <a href="#hem" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-md">Start</a>
                 <a href="#om" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-md">Om Oss</a>
                 <a href="#priser" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-md">Priser</a>
-                <a href="https://www.fresha.com" target="_blank" class="block mt-4 text-center px-3 py-3 bg-accent text-white font-bold rounded">Boka Tid Nu</a>
+                <button onclick="openBooking()" class="w-full text-left mt-4 px-3 py-3 bg-accent text-white font-bold rounded">Boka Tid Nu</button>
             </div>
         </div>
     </nav>
@@ -136,16 +151,16 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-5 justify-center">
-                <a href="https://www.fresha.com" target="_blank" class="group relative px-8 py-4 bg-white text-dark-950 font-bold rounded overflow-hidden transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                <!-- Boka-knapp med Modal-trigger -->
+                <button onclick="openBooking()" class="group relative px-8 py-4 bg-white text-dark-950 font-bold rounded overflow-hidden transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                     <span class="relative z-10">BOKA TID ONLINE</span>
                     <div class="absolute inset-0 h-full w-full bg-gray-200 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-                </a>
+                </button>
                 <a href="#priser" class="px-8 py-4 border border-white/30 backdrop-blur-sm text-white font-bold rounded hover:bg-white/10 transition duration-300">
                     Se Prislista
                 </a>
             </div>
 
-            <!-- Stats / Trust signals -->
             <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/10 pt-8 text-center text-sm text-gray-400">
                 <div><strong class="block text-2xl text-white">100+</strong>Nöjda kunder</div>
                 <div><strong class="block text-2xl text-white">10+</strong>Års erfarenhet</div>
@@ -155,11 +170,10 @@
         </div>
     </header>
 
-    <!-- Features Section (Why Choose Us) -->
+    <!-- Features Section -->
     <section class="py-20 bg-dark-900 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
                 <div class="feature-card bg-dark-800 p-8 rounded-xl border border-white/5 transition-all duration-300" data-aos="fade-up" data-aos-delay="0">
                     <div class="w-14 h-14 bg-dark-700 rounded-lg flex items-center justify-center mb-6 text-accent">
                         <i class="fa-solid fa-crown text-2xl"></i>
@@ -167,7 +181,6 @@
                     <h3 class="text-xl font-bold text-white mb-3">Premium Service</h3>
                     <p class="text-gray-400 leading-relaxed">Vi kompromissar aldrig med kvaliteten. Varje klippning avslutas med styling och rådgivning.</p>
                 </div>
-                <!-- Feature 2 -->
                 <div class="feature-card bg-dark-800 p-8 rounded-xl border border-white/5 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
                     <div class="w-14 h-14 bg-dark-700 rounded-lg flex items-center justify-center mb-6 text-accent">
                         <i class="fa-solid fa-mug-hot text-2xl"></i>
@@ -175,7 +188,6 @@
                     <h3 class="text-xl font-bold text-white mb-3">Avslappnad Miljö</h3>
                     <p class="text-gray-400 leading-relaxed">Njut av en kaffe medan du väntar. Hos oss är stressen portad – här får du en stunds egentid.</p>
                 </div>
-                <!-- Feature 3 -->
                 <div class="feature-card bg-dark-800 p-8 rounded-xl border border-white/5 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-14 h-14 bg-dark-700 rounded-lg flex items-center justify-center mb-6 text-accent">
                         <i class="fa-regular fa-clock text-2xl"></i>
@@ -198,7 +210,7 @@
                         Hair4u grundades med en enkel vision: Att erbjuda Kristinehamn en frisörupplevelse som kombinerar klassiskt hantverk med modern trendkänsla.
                     </p>
                     <p class="text-gray-400 mb-8 text-lg leading-loose">
-                        Oavsett om du är ute efter en klassisk herrklippning, en total "makeover" eller bara vill trimma skägget inför helgen, så är du i trygga händer hos oss. Vi använder enbart marknadsledande produkter för att garantera bästa resultat.
+                        Oavsett om du är ute efter en klassisk herrklippning, en total "makeover" eller bara vill trimma skägget inför helgen, så är du i trygga händer hos oss.
                     </p>
                     <ul class="space-y-4 mb-8">
                         <li class="flex items-center gap-3 text-gray-300">
@@ -214,15 +226,15 @@
                 </div>
                 <div class="relative" data-aos="fade-left">
                     <div class="absolute -inset-4 bg-accent opacity-20 blur-2xl rounded-full"></div>
-                    <img src="frisyr.jpg" alt="Hair4u Interiör" class="relative rounded-lg shadow-2xl border border-white/10 w-full h-auto grayscale hover:grayscale-0 transition duration-700">
+                    <!-- Placeholder image used -->
+                    <img src="https://images.unsplash.com/photo-1503951914875-befbb7135952?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hair4u Interiör" class="relative rounded-lg shadow-2xl border border-white/10 w-full h-auto grayscale hover:grayscale-0 transition duration-700">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Price/Services Section -->
+    <!-- Price Section -->
     <section id="priser" class="py-24 bg-dark-900 relative">
-        <!-- Decoration blobs -->
         <div class="absolute top-20 right-0 w-96 h-96 bg-accent-dark/20 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 relative z-10">
@@ -243,13 +255,13 @@
                     <p class="text-gray-400 mb-8 border-b border-white/5 pb-8">Inkluderar konsultation, hårtvätt, klippning och styling med premiumvax.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-3xl font-bold text-white">380 kr</span>
-                        <a href="https://www.fresha.com" target="_blank" class="w-10 h-10 rounded-full bg-white text-dark-900 flex items-center justify-center hover:bg-accent hover:text-white transition-colors">
+                        <button onclick="openBooking()" class="w-10 h-10 rounded-full bg-white text-dark-900 flex items-center justify-center hover:bg-accent hover:text-white transition-colors">
                             <i class="fa-solid fa-arrow-right"></i>
-                        </a>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Service 2 (Featured) -->
+                <!-- Service 2 (Populär) -->
                 <div class="bg-dark-800 p-8 rounded-2xl border border-accent shadow-[0_0_30px_rgba(37,99,235,0.15)] relative transform md:-translate-y-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Mest Populär</div>
                     <div class="absolute top-6 right-6 text-accent">
@@ -260,9 +272,9 @@
                     <p class="text-gray-400 mb-8 border-b border-white/5 pb-8">Hela paketet. Hårklippning samt skäggtrimning med maskin och linjer med kniv.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-3xl font-bold text-white">500 kr</span>
-                        <a href="https://www.fresha.com" target="_blank" class="px-6 py-2 rounded bg-accent text-white font-bold text-sm hover:bg-blue-600 transition-colors">
+                        <button onclick="openBooking()" class="px-6 py-2 rounded bg-accent text-white font-bold text-sm hover:bg-blue-600 transition-colors">
                             BOKA NU
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -276,67 +288,49 @@
                     <p class="text-gray-400 mb-8 border-b border-white/5 pb-8">Samma höga kvalitet till ett reducerat pris. Gäller vardagar mellan 10:00 - 14:00.</p>
                     <div class="flex items-center justify-between">
                         <span class="text-3xl font-bold text-white">350 kr</span>
-                        <a href="https://www.fresha.com" target="_blank" class="w-10 h-10 rounded-full bg-white text-dark-900 flex items-center justify-center hover:bg-accent hover:text-white transition-colors">
+                        <button onclick="openBooking()" class="w-10 h-10 rounded-full bg-white text-dark-900 flex items-center justify-center hover:bg-accent hover:text-white transition-colors">
                             <i class="fa-solid fa-arrow-right"></i>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials (Social Proof) -->
+    <!-- Testimonials -->
     <section class="py-20 bg-dark-950">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-16">Vad säger våra kunder?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Review 1 -->
                 <div class="bg-dark-900 p-6 rounded-lg border border-white/5">
-                    <div class="flex text-yellow-500 mb-4">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-300 italic mb-6">"Bästa frisören i Kristinehamn! Alltid trevligt bemötande och man går därifrån supernöjd varje gång. Rekommenderas starkt!"</p>
+                    <div class="flex text-yellow-500 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-gray-300 italic mb-6">"Bästa frisören i Kristinehamn! Alltid trevligt bemötande och man går därifrån supernöjd varje gång."</p>
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white font-bold">J</div>
-                        <div>
-                            <p class="text-white font-bold text-sm">Johan Andersson</p>
-                            <p class="text-gray-500 text-xs">Stammis</p>
-                        </div>
+                        <div><p class="text-white font-bold text-sm">Johan Andersson</p></div>
                     </div>
                 </div>
-                <!-- Review 2 -->
                 <div class="bg-dark-900 p-6 rounded-lg border border-white/5">
-                    <div class="flex text-yellow-500 mb-4">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-300 italic mb-6">"Otroligt proffsiga på skägg. Har testat flera ställen men Hair4u har verkligen koll på detaljerna."</p>
+                    <div class="flex text-yellow-500 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-gray-300 italic mb-6">"Otroligt proffsiga på skägg. Hair4u har verkligen koll på detaljerna."</p>
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white font-bold">M</div>
-                        <div>
-                            <p class="text-white font-bold text-sm">Marcus Eklund</p>
-                            <p class="text-gray-500 text-xs">Klippning & Skägg</p>
-                        </div>
+                        <div><p class="text-white font-bold text-sm">Marcus Eklund</p></div>
                     </div>
                 </div>
-                <!-- Review 3 -->
                 <div class="bg-dark-900 p-6 rounded-lg border border-white/5">
-                    <div class="flex text-yellow-500 mb-4">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-300 italic mb-6">"Enkelt att boka, bra priser och snygg salong. Vad mer kan man begära?"</p>
+                    <div class="flex text-yellow-500 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-gray-300 italic mb-6">"Enkelt att boka, bra priser och snygg salong."</p>
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white font-bold">E</div>
-                        <div>
-                            <p class="text-white font-bold text-sm">Erik Svensson</p>
-                            <p class="text-gray-500 text-xs">Ny kund</p>
-                        </div>
+                        <div><p class="text-white font-bold text-sm">Erik Svensson</p></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section (Hanterar frågor innan de uppstår) -->
+    <!-- FAQ -->
     <section class="py-20 bg-dark-900 border-t border-white/5">
         <div class="max-w-3xl mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12">Vanliga frågor</h2>
@@ -349,31 +343,23 @@
                     <h3 class="font-bold text-white mb-2">Var parkerar jag enklast?</h3>
                     <p class="text-gray-400 text-sm">Det finns gott om parkeringar längs Kungsgatan och på torget bara 2 minuters promenad från salongen.</p>
                 </div>
-                <div class="bg-dark-800 p-6 rounded-lg border border-white/5">
-                    <h3 class="font-bold text-white mb-2">Hur avbokar jag min tid?</h3>
-                    <p class="text-gray-400 text-sm">Du kan avboka din tid via länken i bokningsbekräftelsen senast 24 timmar innan besöket.</p>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA / Contact Section -->
+    <!-- CTA / Contact -->
     <section id="kontakt" class="relative py-24 bg-dark-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-accent-dark/20 rounded-3xl p-8 md:p-16 border border-accent/20 relative overflow-hidden text-center">
-                <!-- Background glow -->
                 <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-dark-900/80 to-transparent z-0"></div>
-                
                 <div class="relative z-10">
                     <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Redo för en förändring?</h2>
                     <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">Våra tider fylls snabbt upp. Boka din tid idag för att säkra din plats i stolen.</p>
-                    
-                    <a href="https://www.fresha.com" target="_blank" class="inline-block px-10 py-5 bg-white text-dark-900 font-bold text-lg rounded-lg hover:bg-accent hover:text-white transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                    <button onclick="openBooking()" class="inline-block px-10 py-5 bg-white text-dark-900 font-bold text-lg rounded-lg hover:bg-accent hover:text-white transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                         BOKA TID NU
-                    </a>
+                    </button>
                 </div>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 text-center">
                 <div>
                     <i class="fa-solid fa-location-dot text-3xl text-accent mb-4"></i>
@@ -398,9 +384,7 @@
     <footer class="bg-black py-10 border-t border-white/10">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="text-white font-bold text-xl">HAIR<span class="text-accent">4U</span></div>
-            <div class="text-gray-500 text-sm">
-                &copy; 2024 Hair4u Kristinehamn. Alla rättigheter reserverade.
-            </div>
+            <div class="text-gray-500 text-sm">&copy; 2024 Hair4u Kristinehamn.</div>
             <div class="flex gap-6">
                 <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-instagram text-xl"></i></a>
                 <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-facebook text-xl"></i></a>
@@ -408,22 +392,63 @@
         </div>
     </footer>
 
-    <!-- Initialize Scripts -->
+    <!-- BOOKING MODAL (POPUP) -->
+    <div id="booking-modal" class="hidden-modal fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <!-- Backdrop (Dark background) -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeBooking()"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative bg-white w-full max-w-4xl h-[80vh] rounded-lg overflow-hidden shadow-2xl flex flex-col">
+            <!-- Header with Close Button -->
+            <div class="bg-dark-900 text-white p-4 flex justify-between items-center border-b border-gray-800">
+                <span class="font-bold text-lg">Boka Tid</span>
+                <button onclick="closeBooking()" class="text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- IFRAME (The embedded booking system) -->
+            <!-- VIKTIGT: Byt 'src' länken nedan till din bokningssida (t.ex. Calendly eller Setmore) -->
+            <iframe 
+                src="https://calendly.com/sv" 
+                class="w-full h-full border-0" 
+                title="Bokningssystem">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Init Animation Library
-        AOS.init({
-            once: true,
-            offset: 50,
-            duration: 800,
-        });
+        // Init AOS
+        AOS.init({ once: true, offset: 50, duration: 800 });
 
-        // Mobile Menu Logic
+        // Mobile Menu
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+        // Booking Modal Logic
+        const modal = document.getElementById('booking-modal');
+        const body = document.body;
+
+        function openBooking() {
+            modal.classList.remove('hidden-modal');
+            modal.classList.add('visible-modal');
+            body.style.overflow = 'hidden'; // Stop background scrolling
+        }
+
+        function closeBooking() {
+            modal.classList.remove('visible-modal');
+            modal.classList.add('hidden-modal');
+            body.style.overflow = 'auto'; // Resume scrolling
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeBooking();
+            }
         });
     </script>
 </body>
